@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import SearchedItem from './SearchedItem';
+import SearchedItem from './SearchedItemList';
 
-export default function SearchResults({ movies }) {
+export default function SearchResults({ children }) {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -12,13 +12,7 @@ export default function SearchResults({ movies }) {
       >
         {isOpen1 ? '–' : '+'}
       </button>
-      {isOpen1 && (
-        <ul className="list">
-          {movies?.map((movie) => (
-            <SearchedItem movie={movie} key={movie.imdbID} />
-          ))}
-        </ul>
-      )}
+      {isOpen1 && children}
     </div>
   );
 }
