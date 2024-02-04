@@ -1,4 +1,4 @@
-export default function SearchedItem({ movie }) {
+export default function MovieItem({ movie }) {
   return (
     <li>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
