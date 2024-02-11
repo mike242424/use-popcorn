@@ -1,6 +1,14 @@
-export default function MovieItem({ movie }) {
+export default function MovieItem({ movie, selectedId, onSetSelectedId }) {
   return (
-    <li>
+    <li
+      onClick={() => {
+        if (selectedId === movie.imdbID) {
+          onSetSelectedId(null);
+        } else {
+          onSetSelectedId(movie.imdbID);
+        }
+      }}
+    >
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       <div>
