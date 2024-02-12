@@ -109,7 +109,7 @@ export default function App() {
           ) : (
             <>
               <WatchedSummary watched={watched} />
-              <WatchedList watched={watched} />{' '}
+              <WatchedList watched={watched} onSetWatchedMovie={setWatched} />
             </>
           )}
         </Box>

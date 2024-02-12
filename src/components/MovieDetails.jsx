@@ -46,6 +46,10 @@ export default function MovieDetails({
     getMovie();
   }, [selectedId]);
 
+  useEffect(() => {
+    document.title = `Movie | ${movie.Title}`;
+  }, [movie.Title]);
+
   function handleAddMovie() {
     onSetWatchedMovie((movies) => [
       ...movies,
