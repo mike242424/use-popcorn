@@ -35,12 +35,15 @@ export default function App() {
   // }, []);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function fetchMovies() {
       try {
         setIsLoading(true);
         setError('');
         const res = await fetch(
           `http://www.omdbapi.com/?&apikey=${process.env.REACT_APP_API_KEY}&s=${query}`,
+          { signal: controller.signal },
         );
 
         if (!res.ok) {
@@ -54,9 +57,14 @@ export default function App() {
         }
 
         setMovies(data.Search);
+        setError('');
         // console.log(data.Search);
       } catch (err) {
-        setError(err.message);
+        console.log(err.message);
+        console.log(err.name);
+        if (err.name !== 'AbortError') {
+          setError(err.message);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -69,6 +77,10 @@ export default function App() {
     }
 
     fetchMovies();
+
+    return function () {
+      controller.abort();
+    };
   }, [query]);
 
   return (
