@@ -18,8 +18,6 @@ export default function MovieDetails({
     (movie) => movie.imdbID === selectedId,
   )?.userRating;
 
-  console.log(watchedUserRating);
-
   useEffect(() => {
     async function getMovie() {
       try {
@@ -68,6 +66,22 @@ export default function MovieDetails({
     ]);
     onSetSelectedId(null);
   }
+
+  useEffect(
+    function () {
+      function callbackFxn(e) {
+        if (e.code === 'Escape') {
+          onSetSelectedId(null);
+          console.log('Closing');
+        }
+      }
+      document.addEventListener('keydown', callbackFxn);
+      return function () {
+        document.removeEventListener('keydown', callbackFxn);
+      };
+    },
+    [onSetSelectedId],
+  );
 
   return (
     <div className="details">
