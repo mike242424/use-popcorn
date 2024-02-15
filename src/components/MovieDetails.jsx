@@ -32,8 +32,6 @@ export default function MovieDetails({
           throw new Error('No movies found');
         }
 
-        // console.log(data);
-
         setMovie(data);
         setIsLoading(false);
       } catch (err) {
@@ -53,7 +51,7 @@ export default function MovieDetails({
     };
   }, [movie.Title]);
 
-  function handleAddMovie() {
+  function handleAddWatched() {
     onSetWatchedMovie((movies) => [
       ...movies,
       {
@@ -64,6 +62,20 @@ export default function MovieDetails({
         userRating,
       },
     ]);
+
+    // localStorage.setItem(
+    //   'watched',
+    //   JSON.stringify([
+    //     ...watched,
+    //     {
+    //       ...movie,
+    //       imdbID: selectedId,
+    //       imdbRating: Number(movie.imdbRating),
+    //       Runtime: Number(movie.Runtime.split(' ')[0]),
+    //       userRating,
+    //     },
+    //   ]),
+    // );
     onSetSelectedId(null);
   }
 
@@ -116,7 +128,7 @@ export default function MovieDetails({
                     onSetRating={setUserRating}
                   />
                   {userRating > 0 && (
-                    <button onClick={handleAddMovie} className="btn-add">
+                    <button onClick={handleAddWatched} className="btn-add">
                       Add To Watched List
                     </button>
                   )}

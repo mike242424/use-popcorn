@@ -14,25 +14,15 @@ import MovieItem from './components/MovieItem';
 
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
+  // const [watched, setWatched] = useState([]);
+  const [watched, setWatched] = useState(function () {
+    const storedValue = JSON.parse(localStorage.getItem('watched'));
+    return storedValue;
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [query, setQuery] = useState('');
   const [selectedId, setSelectedId] = useState(null);
-
-  // fetch(
-  //   `http://www.omdbapi.com/?&apikey=${process.env.REACT_APP_API_KEY}&s=Jaws`,
-  // )
-  //   .then((res) => res.json())
-  //   .then((data) => setMovies(data.Search));
-
-  // useEffect(() => {
-  //   fetch(
-  //     `http://www.omdbapi.com/?&apikey=${process.env.REACT_APP_API_KEY}&s=Jaws`,
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => setMovies(data.Search));
-  // }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -58,7 +48,6 @@ export default function App() {
 
         setMovies(data.Search);
         setError('');
-        // console.log(data.Search);
       } catch (err) {
         console.log(err.message);
         console.log(err.name);
@@ -83,6 +72,13 @@ export default function App() {
       controller.abort();
     };
   }, [query]);
+
+  useEffect(
+    function () {
+      localStorage.setItem('watched', JSON.stringify(watched));
+    },
+    [watched],
+  );
 
   return (
     <>
