@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import StarRating from './StarRating';
 import Loader from './Loader';
+import { useKey } from '../hooks/useKey';
 
 export default function MovieDetails({
   selectedId,
@@ -72,37 +73,10 @@ export default function MovieDetails({
       },
     ]);
 
-    // localStorage.setItem(
-    //   'watched',
-    //   JSON.stringify([
-    //     ...watched,
-    //     {
-    //       ...movie,
-    //       imdbID: selectedId,
-    //       imdbRating: Number(movie.imdbRating),
-    //       Runtime: Number(movie.Runtime.split(' ')[0]),
-    //       userRating,
-    //     },
-    //   ]),
-    // );
     onSetSelectedId(null);
   }
 
-  useEffect(
-    function () {
-      function callbackFxn(e) {
-        if (e.code === 'Escape') {
-          onSetSelectedId(null);
-          console.log('Closing');
-        }
-      }
-      document.addEventListener('keydown', callbackFxn);
-      return function () {
-        document.removeEventListener('keydown', callbackFxn);
-      };
-    },
-    [onSetSelectedId],
-  );
+  useKey('Escape', onSetSelectedId);
 
   return (
     <div className="details">
